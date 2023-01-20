@@ -83,11 +83,9 @@ module.exports = async ({ host, hexData, log, name, debug }) => {
       const { stdout, stderr } = await exec('echo -e '+hexData+' > /dev/ttyACM0');
       log('stdout:', stdout);
       log('stderr:', stderr);
-  } catch (err)=>{
+  } catch (err) {
     console.error(err);
   };
   return log('message written');
   // log(`${name} sendHex (${device.host.address}; ${device.host.macAddress}) ${hexData}`);
 }
-
-
