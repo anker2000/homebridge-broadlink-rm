@@ -38,11 +38,12 @@
 // const { getDevice } = require('./getDevice');
 // const convertProntoCode = require('./convertProntoCode')
 const { SerialPort } = require('serialport');
-const port = new SerialPort({
-  path: '/dev/ttyACM0',
-  baudRate: 115200,
-})
+
 module.exports = ({ host, hexData, log, name, debug }) => {
+  const port = new SerialPort({
+    path: '/dev/ttyACM0',
+    baudRate: 115200,
+  })
   // assert(hexData && typeof hexData === 'string', `\x1b[31m[ERROR]: \x1b[0m${name} sendData (HEX value is missing)`);
 
   // // Check for pronto code
