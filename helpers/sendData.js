@@ -37,13 +37,15 @@
 
 // const { getDevice } = require('./getDevice');
 // const convertProntoCode = require('./convertProntoCode')
-const { SerialPort } = require('serialport');
+// const { SerialPort } = require('serialport');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
-module.exports = ({ host, hexData, log, name, debug }) => {
-  const port = new SerialPort({
-    path: '/dev/ttyACM0',
-    baudRate: 115200,
-  })
+module.exports = async ({ host, hexData, log, name, debug }) => {
+  // const port = new SerialPort({
+  //   path: '/dev/ttyACM0',
+  //   baudRate: 115200,
+  // })
   // assert(hexData && typeof hexData === 'string', `\x1b[31m[ERROR]: \x1b[0m${name} sendData (HEX value is missing)`);
 
   // // Check for pronto code
@@ -70,12 +72,22 @@ module.exports = ({ host, hexData, log, name, debug }) => {
 
   // const hexDataBuffer = new Buffer(hexData, 'hex');
   // device.sendData(hexDataBuffer, debug, hexData);
-  port.write(hexData, function(err) {
-    if (err) {
-      return log('Error on write: ', err.message)
-    }
+  // port.write(hexData, function(err) {
+  //   if (err) {
+  //     return log('Error on write: ', err.message)
+  //   }
     
-  })
+  // })
+  log('sending hex data'+hexData);
+  try {
+      const { stdout, stderr } = await exec('echo -e '+hexData+' > /dev/ttyACM0');
+      log('stdout:', stdout);
+      log('stderr:', stderr);
+  } catch (err)=>{
+    console.error(err);
+  };
   return log('message written');
   // log(`${name} sendHex (${device.host.address}; ${device.host.macAddress}) ${hexData}`);
 }
+
+
