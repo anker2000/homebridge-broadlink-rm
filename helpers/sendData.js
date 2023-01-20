@@ -78,6 +78,7 @@ module.exports = async ({ host, hexData, log, name, debug }) => {
   //   }
     
   // })
+  console.log('sending hex data'+hexData);
   log('sending hex data'+hexData);
   try {
       const { stdout, stderr } = await exec('echo -e '+hexData+' > /dev/ttyACM0');
