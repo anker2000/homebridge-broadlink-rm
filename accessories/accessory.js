@@ -83,7 +83,7 @@ class BroadlinkRMAccessory extends HomebridgeAccessory {
     //Error catch
     if(data === undefined){return}
     log('hey' + typeof data);
-    if (typeof data === 'string') {
+    if (typeof data === 'string' || typeof data==='number') {
       sendData({ host, hexData: data, log, name, logLevel });
 
       return;
